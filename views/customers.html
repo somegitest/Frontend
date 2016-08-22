@@ -1,0 +1,68 @@
+﻿<div class="row">
+    <div class="col-md-12">
+        <button class="btn btn-info order-btn" type="submit" ng-click="newEmployee()" ng-show="NewEmployeeVisible">New Employee</button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th class="col200">Full Name</th>
+                    <th ng-if="isCustomerList">Business Name</th>
+                    <th style="width: 200px">Email</th>
+                    <th class="text-center col20">Email Confirmed</th>
+                    <th style="width: 200px">Phone Number</th>
+                    <th class="width_100">Role</th>
+                    <th class="text-center" ng-if="isCustomerList">Web site<br/>Facebook<br/>Twitter</th>
+                    <th class="text-right col70" ng-if="customerSsoVisible">SSO</th>
+                    <th class="col70"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="customer in customers">
+                    <td>
+                        {{ customer.fullName }}
+                    </td>
+                    <td ng-if="isCustomerList">
+                        {{ customer.businessName }}
+                    </td>
+                    <td>
+                        {{ customer.email }}
+                    </td>
+                    <td class="text-center">
+                        <span aria-hidden="true" class="glyphicon glyphicon-ok" data-ng-hide="!customer.emailConfirmed"></span>
+                        <span aria-hidden="true" class="glyphicon glyphicon-remove" data-ng-hide="customer.emailConfirmed"></span>
+                    </td>
+                    <td>
+                        {{ customer.phoneNumber }}
+                    </td>
+                    <td>
+                        {{ customer.roleName }}
+                    </td>
+                    <td ng-if="isCustomerList">
+                        <a href="http://{{customer.webSite}}" target="_balnk">{{customer.webSite}}</a><br/>
+                        <a href="http://{{customer.facebookUrl}}" target="_balnk">{{customer.facebookUrl}}</a><br/>
+                        <a href="http://{{customer.twitterHandle}}" target="_balnk">{{customer.twitterHandle}}</a><br />
+                    </td>
+                    <td class="width_150" style="clear: both" ng-if="customerSsoVisible">
+                        <form name="form">
+                            <div style="float: left">
+                                <input class="text-right" style="width: 70px" type="text" ng-model="customer.sso" ng-change="" />
+                            </div>
+                            <div>
+                                <button class="btn btn-sm btn-success" type="button" ng-disabled="!form.$dirty" ng-click="setSso(customer)">Set</button>
+                            </div>
+                        </form>
+
+                    </td>
+                    <td>
+                        <button class="btn btn-md btn-danger btn-sm btn-block" type="submit" data-ng-click="lock(true, customer)" data-ng-hide="customer.isLocked">Lock</button>
+                        <button class="btn btn-md btn-primary btn-sm btn-block" type="submit" data-ng-click="lock(false, customer)" data-ng-hide="!customer.isLocked || !customer.emailConfirmed">UnLock</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
